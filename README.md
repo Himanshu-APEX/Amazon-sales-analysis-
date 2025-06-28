@@ -87,5 +87,8 @@ This analysis provides Amazon's sales team and stakeholders with the ability to:
 * Drive retention with customer segmentation
 
 ---
+Contact
 
-Let me know if you'd like help formatting this for GitHub (markdown headings, emojis, badges), or need a live link version.
+For questions or contributions, contact Himanshu Kumar at [himanshuk3512@gmail.com] or open an issue on GitHub.
+
+Thank you for exploring this project!
