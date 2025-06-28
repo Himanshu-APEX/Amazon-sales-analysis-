@@ -1,0 +1,157 @@
+
+---
+
+````markdown
+# 🛠️ Step-by-Step Process: Amazon Sales Analysis Dashboard
+
+This document outlines the complete workflow followed to transform raw Amazon sales data into actionable insights using **Excel**, **Python (Pandas)**, and **Power BI**.
+
+---
+
+## 📦 Dataset Brief
+
+The dataset contains over **120,000 rows** of transactional Amazon sales data, including:
+
+| Column Name            | Description                                      |
+|------------------------|--------------------------------------------------|
+| `Order ID`             | Unique identifier for each sale                  |
+| `Date`                 | Date of transaction                              |
+| `Category`             | Product type (T-Shirt, Shirt, Perfume, etc.)     |
+| `Qty`                  | Number of units sold                             |
+| `Amount`               | Revenue generated from the order (₹)             |
+| `Fulfilment`           | Fulfillment method (Amazon or Merchant)          |
+| `Status`               | Delivery status (Delivered, Cancelled, etc.)     |
+| `ship_city`, `ship_state` | Customer location                            |
+
+---
+
+## 📊 Step 1: Initial Review in Excel
+
+- Opened `.csv` file to get a quick preview
+- Identified blank columns and inconsistent formatting
+- Saved as `Amazon Sale Report.csv` for import into Python
+
+---
+
+## 🐍 Step 2: Data Cleaning & Feature Engineering with Python
+
+Used **Pandas** and EDA to transform the data.
+
+### ✅ Key Actions:
+- Removed unnecessary columns like `New`, `PendingS`
+- Converted `Date` column to datetime format
+- Filled missing values in `Amount`, `ship_city`, `ship_state`, and `currency`
+- Created new columns for time-based analysis
+
+### 🔧 Code Snippets Used:
+
+```python
+import pandas as pd
+
+# Load dataset
+df = pd.read_csv("Amazon Sale Report.csv")
+
+# Convert date column
+df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+
+# Feature extraction
+df['Month'] = df['Date'].dt.month_name()
+df['Year'] = df['Date'].dt.year
+df['Quarter'] = df['Date'].dt.quarter
+
+# Fill missing values
+df['Amount'].fillna(0, inplace=True)
+df['currency'].fillna('INR', inplace=True)
+df['ship_city'].fillna('Unknown', inplace=True)
+df['ship_state'].fillna('Unknown', inplace=True)
+
+# Save cleaned file
+df.to_csv("amazon_sales_cleaned.csv", index=False)
+````
+
+---
+
+## 📊 Step 3: Power BI Dashboard Creation
+
+Imported the `amazon_sales_cleaned.csv` file into Power BI Desktop.
+
+### 🔧 Used Power Query for:
+
+* Renaming columns (e.g., `ship_state` → `State`)
+* Grouping delivery `Status` into high-level categories (e.g., Delivered, Cancelled, Returned)
+* Removing nulls and redundant rows
+
+---
+
+## 📐 Step 4: DAX Measures for KPIs & Charts
+
+### 📌 Key DAX Measures Created:
+
+```dax
+Total Revenue = SUM('amazon_sales_cleaned'[Amount])
+
+Total Orders = DISTINCTCOUNT('amazon_sales_cleaned'[Order ID])
+
+Average Order Value = 
+DIVIDE(
+    [Total Revenue],
+    [Total Orders]
+)
+
+Total Quantity = SUM('amazon_sales_cleaned'[Qty])
+
+Returned Orders = 
+CALCULATE(
+    COUNTROWS('amazon_sales_cleaned'),
+    'amazon_sales_cleaned'[Status Group] = "Returned"
+)
+```
+
+---
+
+## 📊 Step 5: Visualizations & Dashboard Layout
+
+### 💡 Visuals Used:
+
+| Visual Type          | Purpose                                 |
+| -------------------- | --------------------------------------- |
+| **KPI Cards**        | Total Revenue, Orders, Avg Order Value  |
+| **Line Chart**       | Monthly/Quarterly revenue trend         |
+| **Bar Chart**        | Top Categories by Sales                 |
+| **100% Stacked Bar** | Fulfilment method vs delivery outcome   |
+| **Donut Chart **     | RFM-based customer segmentation         |
+| **Table (Top N)**    | Top cities by revenue and quantity sold |
+
+---
+
+## 🧠 Step 6: Business Insights Extracted
+
+* **T-Shirts and Shirts** are the top-selling categories
+* **Q2** saw the highest spike in revenue, indicating seasonal trends
+* **Amazon-fulfilled orders** have a higher delivery success rate
+* Geo analysis shows **sales concentration in Tier-1 cities**
+* **Customer segmentation** using Recency, Frequency, and Monetary analysis provides retention strategy guidance
+
+---
+
+## ✅ Conclusion
+
+This project demonstrates how to:
+
+* Clean messy retail data using Python
+* Engineer features for time, fulfillment, and RFM metrics
+* Build a professional Power BI dashboard that informs strategy
+
+
+---
+
+📁 **Files in this Project:**
+
+* `amazon_sales_cleaned.csv` – Final dataset used in dashboard
+* `Amazon_Dashboard.pbix` – Power BI dashboard file
+* `README.md` – Project overview
+* `amazon_sales_analysis_steps.md` – This detailed step log
+
+```
+
+---
