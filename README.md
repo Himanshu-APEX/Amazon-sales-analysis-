@@ -69,11 +69,11 @@ To analyze Amazon's sales data and uncover patterns in **product performance**, 
 
 ## Repository Structure
 
-*amazon_sales_cleaned.csv: Input dataset.
-*amazon.ipynb: Jupyter Notebook with data cleaning, analysis, and visualization code.
-*Dashboard link .pbix
-*outputs/: Directory with exported CSVs (e.g., daily_sales.csv, category_summary.csv) and charts (e.g., category_revenue.png).
-*README.md: Project overview and instructions.
+* amazon_sales_cleaned.csv: Input dataset.
+*  amazon.ipynb: Jupyter Notebook with data cleaning, analysis, and visualization code.
+* Dashboard link .pbix
+* outputs/: Directory with exported CSVs (e.g., daily_sales.csv, category_summary.csv) and charts (e.g., category_revenue.png).
+* README.md: Project overview and instructions.
 
 ---
 
